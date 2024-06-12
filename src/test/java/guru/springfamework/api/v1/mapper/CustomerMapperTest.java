@@ -7,19 +7,22 @@ import junit.framework.TestCase;
 public class CustomerMapperTest extends TestCase {
 
     private static final Long ID = 2L;
-    private static final String NAME = "Tom Clancy";
+    private static final String FIRSTNAME = "Tom";
+    private static final String LASTNAME = "Clancy";
     CustomerMapper customerMapper = CustomerMapper.INSTANCE;
 
     public void testCustomerToCustomerDTO() {
         //given
         Customer customer = new Customer();
         customer.setId(ID);
-        customer.setName(NAME);
+        customer.setFirstname(FIRSTNAME);
+        customer.setLastname(LASTNAME);
 
         //when
         CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
 
         assertEquals(ID, customerDTO.getId());
-        assertEquals(NAME, customerDTO.getName());
+        assertEquals(FIRSTNAME, customerDTO.getFirstname());
+        assertEquals(LASTNAME, customerDTO.getLastname());
     }
 }

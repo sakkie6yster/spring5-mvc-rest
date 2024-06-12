@@ -11,15 +11,17 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 public class CustomerServiceTest {
 
     public static final Long ID = 2L;
-    public static final String NAME = "Edgars";
+    public static final String FIRSTNAME = "Edgar";
+    public static final String LASTNAME = "Hoover";
     CustomerService customerService;
 
     @Mock
@@ -54,17 +56,18 @@ public class CustomerServiceTest {
         //given
         Customer customer = new Customer();
         customer.setId(ID);
-        customer.setName(NAME);
+        customer.setFirstname(FIRSTNAME);
+        customer.setLastname(LASTNAME);
 
-        when(customerRepository.findByName(anyString())).thenReturn(customer);
+        when(customerRepository.findById(anyLong())).thenReturn(Optional.of(customer));
 
         //when
-        CustomerDTO categoryDTO = customerService.getCustomerByName(NAME);
+        CustomerDTO categoryDTO = customerService.getCustomerById(ID);
 
         //then
         assertEquals(ID, categoryDTO.getId());
-        assertEquals(NAME, categoryDTO.getName());
-
+        assertEquals(FIRSTNAME, categoryDTO.getFirstname());
+        assertEquals(LASTNAME, categoryDTO.getLastname());
     }
 
 }

@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -25,8 +25,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class CustomerControllerTest extends TestCase {
 
-    private static final String NAME1 = "James Dodd";
-    private static final String NAME2 = "Melissa Scott";
+    private static final Long ID = 2L;
+    private static final String FIRSTNAME1 = "James";
+    private static final String LASTNAME1 = "Dodd";
+    private static final String FIRSTNAME2 = "Melissa";
+    private static final String LASTNAME2 = "Scott";
     @Mock
     CustomerService customerService;
     @InjectMocks
@@ -42,11 +45,13 @@ public class CustomerControllerTest extends TestCase {
     public void testGetAllCustomers() throws Exception {
         CustomerDTO james = new CustomerDTO();
         james.setId(1l);
-        james.setName(NAME1);
+        james.setFirstname(FIRSTNAME1);
+        james.setLastname(LASTNAME1);
 
         CustomerDTO melissa = new CustomerDTO();
         melissa.setId(2l);
-        melissa.setName(NAME2);
+        melissa.setFirstname(FIRSTNAME2);
+        melissa.setLastname(LASTNAME2);
 
         List<CustomerDTO> customers = Arrays.asList(james, melissa);
 
@@ -61,14 +66,14 @@ public class CustomerControllerTest extends TestCase {
     @Test
     public void testGetCustomerByName() throws Exception {
         CustomerDTO james = new CustomerDTO();
-        james.setId(1l);
-        james.setName(NAME1);
+        james.setId(ID);
+        james.setFirstname(FIRSTNAME1);
 
-        when(customerService.getCustomerByName(anyString())).thenReturn(james);
+        when(customerService.getCustomerById(anyLong())).thenReturn(james);
 
-        mockMvc.perform(get("/api/v1/customers/" + NAME1)
+        mockMvc.perform(get("/api/v1/customers/" + ID)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", equalTo(NAME1)));
+                .andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME1)));
     }
 }
