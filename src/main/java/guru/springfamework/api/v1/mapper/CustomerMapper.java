@@ -5,6 +5,9 @@ import guru.springfamework.domain.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+/**
+ * Created by jt on 9/27/17.
+ */
 @Mapper
 public interface CustomerMapper {
 
@@ -12,5 +15,5 @@ public interface CustomerMapper {
 
     CustomerDTO customerToCustomerDTO(Customer customer);
 
-    Customer customerDTOToCustomer(CustomerDTO customerDTO);
+    Customer customerDtoToCustomer(CustomerDTO customerDTO);
 }
